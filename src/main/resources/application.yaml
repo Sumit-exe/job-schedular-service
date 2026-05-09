@@ -1,0 +1,21 @@
+logging:
+  level:
+    org.springframework.data.cassandra: INFO
+
+spring:
+  application:
+    name: jobschedular
+  cassandra:
+    contact-points: localhost
+    port: 9042
+    keyspace-name: scheduler
+    schema-action: create-if-not-exists
+    local-datacenter: datacenter1
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+jwt:
+  secret: change-this-secret-key-very-long
