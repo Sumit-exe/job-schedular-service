@@ -16,38 +16,8 @@ The platform allows users to:
 # System Architecture
 
 ## High Level Architecture
+![img.png](img.png)
 
-```text
-                    +----------------------+
-                    |   React Frontend     |
-                    |  (Vite + React)      |
-                    +----------+-----------+
-                               |
-                               v
-                  +------------+-------------+
-                  |     Auth Service         |
-                  |  JWT Authentication      |
-                  +------------+-------------+
-                               |
-                               v
-                  +------------+-------------+
-                  | Scheduler Service        |
-                  | Create / Manage Jobs     |
-                  +------------+-------------+
-                               |
-                               v
-                        Apache Kafka
-                  (job-execution-topic)
-                               |
-                               v
-                  +------------+-------------+
-                  | Executor Service         |
-                  | Execute Scheduled Jobs   |
-                  +------------+-------------+
-                               |
-                               v
-                         Cassandra DB
-```
 
 ---
 
