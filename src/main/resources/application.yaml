@@ -1,21 +1,53 @@
 logging:
   level:
-    org.springframework.data.cassandra: INFO
+    org.springframework.data.cassandra: ${CASSANDRA_LOG_LEVEL:INFO}
 
 spring:
   application:
-    name: jobschedular
+    name: ${APPLICATION_NAME:jobschedular}
+
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.data.cassandra.autoconfigure.DataCassandraAutoConfiguration
+      - org.springframework.boot.cassandra.autoconfigure.CassandraAutoConfiguration
+
   cassandra:
-    contact-points: localhost
-    port: 9042
-    keyspace-name: scheduler
-    schema-action: create-if-not-exists
-    local-datacenter: datacenter1
+    keyspace-name: ${CASSANDRA_KEYSPACE:scheduler}
+    schema-action: ${CASSANDRA_SCHEMA_ACTION:create-if-not-exists}
+
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+
+    properties:
+      security.protocol: ${KAFKA_SECURITY_PROTOCOL:SSL}
+
+      ssl.truststore.type: ${KAFKA_TRUSTSTORE_TYPE:JKS}
+      ssl.truststore.location: ${KAFKA_TRUSTSTORE_LOCATION:src/main/resources/certs/truststore.jks}
+      ssl.truststore.password: ${KAFKA_TRUSTSTORE_PASSWORD:changeit}
+
+      ssl.keystore.type: ${KAFKA_KEYSTORE_TYPE:PKCS12}
+      ssl.keystore.location: ${KAFKA_KEYSTORE_LOCATION:src/main/resources/certs/client.p12}
+      ssl.keystore.password: ${KAFKA_KEYSTORE_PASSWORD:changeit}
+
+      ssl.key.password: ${KAFKA_KEY_PASSWORD:changeit}
+
     producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      key-serializer: ${KAFKA_PRODUCER_KEY_SERIALIZER:org.apache.kafka.common.serialization.StringSerializer}
+      value-serializer: ${KAFKA_PRODUCER_VALUE_SERIALIZER:org.apache.kafka.common.serialization.StringSerializer}
+
+    consumer:
+      group-id: ${KAFKA_CONSUMER_GROUP_ID:my-consumer-group}
+      auto-offset-reset: ${KAFKA_AUTO_OFFSET_RESET:earliest}
+      key-deserializer: ${KAFKA_CONSUMER_KEY_DESERIALIZER:org.apache.kafka.common.serialization.StringDeserializer}
+      value-deserializer: ${KAFKA_CONSUMER_VALUE_DESERIALIZER:org.apache.kafka.common.serialization.StringDeserializer}
+
+datastax:
+  astra:
+    secure-connect-bundle: ${ASTRA_SECURE_CONNECT_BUNDLE:src/main/resources/secure-connect.zip}
+
+spring.data.cassandra:
+      username: ${CASSANDRA_USERNAME}
+      password: ${CASSANDRA_PASSWORD}
 
 jwt:
-  secret: change-this-secret-key-very-long
+  secret: ${JWT_SECRET}

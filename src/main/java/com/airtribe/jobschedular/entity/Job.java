@@ -49,14 +49,18 @@ public class Job {
     @Column("is_active")
     private Boolean isActive;
 
+    @Column("schedule_type")
     private ScheduleType scheduleType;
 
+    @Column("execute_at")
     private Instant executeAt;
 
     private Integer frequency;
 
+    @Column("time_unit")
     private TimeUnit timeUnit;
 
+    @Column("cron_expression")
     private String cronExpression;
 
     @Column("timezone")

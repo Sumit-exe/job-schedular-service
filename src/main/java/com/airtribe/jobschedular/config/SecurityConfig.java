@@ -20,8 +20,7 @@ import java.util.List;
 public class SecurityConfig {
 
     @Bean
-    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http,
-                                                         JwtWebFilter jwtWebFilter) {
+    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http, JwtWebFilter jwtWebFilter) {
 
         return http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
