@@ -32,7 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 
-src/main/resources/certs/
-#src/main/resources/*.zip
-src/main/resources/*.jks
-src/main/resources/*.p12
+
